@@ -150,7 +150,9 @@ class EasyPanelServiceProvider extends ServiceProvider
 
     private function loadRelations()
     {
-        $model = !$this->app->runningUnitTests() ? config('easy_panel.user_model') : User::class;
+        // This causes issues during automated testing
+        //$model = !$this->app->runningUnitTests() ? config('easy_panel.user_model') : User::class;
+        $model = config('easy_panel.user_model');
 
         $model::resolveRelationUsing('panelAdmin', function ($userModel){
             return $userModel->hasOne(PanelAdmin::class)->latest();
